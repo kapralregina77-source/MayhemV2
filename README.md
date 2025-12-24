@@ -1,9 +1,9 @@
-# Havoc AI Agent Bot
+# MayhemV2 AI Agent Bot
 
 Ai Agent market-making system for pump.fun tokens that evaluates creator behavior and adjusts liquidity support accordingly.
 
 **Mayhem** introduces volatility and tests token robustness.
-**Havoc** evaluates creator reputation and provides liquidity support or adds friction based on trustworthiness.
+**MayhemV2** evaluates creator reputation and provides liquidity support or adds friction based on trustworthiness.
 
 Together they sort legitimate projects from bad ones.
 
@@ -66,11 +66,11 @@ Responds to pool state and creator band with liquidity adjustments.
 
 ```
 src/
-├── havoc/                          # Havoc core modules
+├── MayhemV2/                          # MayhemV2 core modules
 │   ├── cri.ts                      # Creator Reputation Index (with temporal decay)
 │   ├── market-maker.ts             # MM engine (black-boxed decisions)
 │   ├── state-machine.ts            # State transitions (hidden logic)
-│   ├── havoc-core.ts               # Main orchestrator
+│   ├── MayhemV2-core.ts               # Main orchestrator
 │   ├── pattern-detector.ts         # ML-based chaos prediction
 │   ├── event-emitter.ts            # Typed event system for pub-sub
 │   ├── mayhem-intelligence.ts      # Observes Mayhem patterns
@@ -80,10 +80,10 @@ src/
 │   ├── performance-dashboard.ts    # Metrics & aggregation
 │   └── index.ts                    # Public API
 ├── __tests__/
-│   ├── havoc-mayhem-coordination.test.ts   # Dual-agent tests
-│   ├── havoc-anticipation.test.ts          # Predictive behavior
-│   ├── havoc-ml-pattern-detection.test.ts  # ML validation
-│   └── havoc-event-system.test.ts          # Event system
+│   ├── MayhemV2-mayhem-coordination.test.ts   # Dual-agent tests
+│   ├── MayhemV2-anticipation.test.ts          # Predictive behavior
+│   ├── MayhemV2-ml-pattern-detection.test.ts  # ML validation
+│   └── MayhemV2-event-system.test.ts          # Event system
 ├── pool.ts                         # Pool state utilities
 ├── mayhem-detector.ts              # Mayhem Mode detection
 └── config.ts                       # Configuration
@@ -94,7 +94,7 @@ src/
 ### Initialize
 
 ```typescript
-const havoc = new HavocOrchestrator(connection, {
+const MayhemV2 = new MayhemV2Orchestrator(connection, {
   tokenMint,
   launchTime: Date.now(),
   maxInterventionsPerHour: 10,
@@ -102,7 +102,7 @@ const havoc = new HavocOrchestrator(connection, {
   updateFrequencyMs: 5000,
 });
 
-await havoc.initialize();
+await MayhemV2.initialize();
 ```
 
 ### Main Loop
@@ -110,7 +110,7 @@ await havoc.initialize();
 ```typescript
 // Call on each block or at updateFrequencyMs interval:
 const mayhemSignal = { chaosLevel: 0.8, suggestedSynchronization: true };
-const action = await havoc.tick(mayhemSignal);
+const action = await MayhemV2.tick(mayhemSignal);
 // action.type: SPREAD_COMPRESSION | VOLUME_SMOOTHING | EXTRACTION_SUPPRESSION | ...
 ```
 
@@ -118,7 +118,7 @@ const action = await havoc.tick(mayhemSignal);
 
 ```typescript
 if (rugDetected) {
-  await havoc.onRugDetected(severity); // 0-1
+  await MayhemV2.onRugDetected(severity); // 0-1
   // Automatically transitions to ADVERSARIAL
 }
 ```
@@ -126,10 +126,10 @@ if (rugDetected) {
 ### Status & Logs
 
 ```typescript
-const status = havoc.getStatus();
+const status = MayhemV2.getStatus();
 // { state, criband, totalActions, nextActionEligible, lastUpdate }
 
-const actionLog = havoc.getActionLog(100);
+const actionLog = MayhemV2.getActionLog(100);
 // [{ type, timestamp, signature? }, ...]
 ```
 
@@ -157,13 +157,13 @@ npm test
 
 **Test Suites** (72 tests, 100% pass rate):
 
-1. **Havoc ↔ Mayhem Coordination** (17 tests)
+1. **MayhemV2 ↔ Mayhem Coordination** (17 tests)
    - CRI band transitions under interference
    - State machine behavior
    - MM response to chaos signals
    - Guardian dampening vs Adversarial sync
 
-2. **Havoc Anticipation** (7 tests)
+2. **MayhemV2 Anticipation** (7 tests)
    - Pattern recognition (68.75% volatility reduction)
    - Proactive response (50ms head start)
    - Response timing validation
@@ -212,7 +212,7 @@ USE_BLOXROUTE=true
 Real-time typed events for system coordination:
 
 ```typescript
-const emitter = getHavocEventEmitter();
+const emitter = getMayhemV2EventEmitter();
 
 emitter.on("CRI_CHANGE", (payload) => {
   console.log(`Developer ${payload.mint}: ${payload.previousBand} → ${payload.newBand}`);
@@ -243,7 +243,7 @@ const nextAction = detector.predictNextAction(mint);
 const forecast = detector.forecastMagnitude(mint, "CHAOS_LEVEL", 2);
 ```
 
-### Havoc Intelligence
+### MayhemV2 Intelligence
 
 Predicts Mayhem chaos patterns with 2-3 block head start:
 
